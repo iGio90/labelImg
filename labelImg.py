@@ -1180,6 +1180,8 @@ class MainWindow(QMainWindow, WindowMixin):
                                                      '%s - Open Directory' % __appname__, defaultOpenDirPath,
                                                      QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks))
         self.importDirImages(targetDirPath)
+        if os.path.exists(targetDirPath + '/classes.txt'):
+            self.loadPredefinedClasses(targetDirPath + '/classes.txt')
 
     def importDirImages(self, dirpath):
         if not self.mayContinue() or not dirpath:
@@ -1393,6 +1395,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.setDirty()
 
     def loadPredefinedClasses(self, predefClassesFile):
+        self.labelHist = []
         if os.path.exists(predefClassesFile) is True:
             with codecs.open(predefClassesFile, 'r', 'utf8') as f:
                 for line in f:
